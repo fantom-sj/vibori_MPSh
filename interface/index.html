@@ -366,6 +366,58 @@
 				text-shadow: 0px 1px 2px rgba(25, 69, 140, 0.5)
 			}
 			
+			/*---Оформление кнопок выбора файлов---*/
+			.input-file {
+				position: relative;
+				display: inline-block;
+			}
+			
+			.input-file span {
+				position: relative;
+				display: inline-block;
+				cursor: pointer;
+				outline: none;
+				text-decoration: none;
+				font-size: 14px;
+				vertical-align: middle;
+				color: rgb(255 255 255);
+				text-align: center;
+				border-radius: 4px;
+				background-color: #419152;
+				line-height: 22px;
+				height: 40px;
+				padding: 10px 20px;
+				box-sizing: border-box;
+				border: none;
+				margin: 0;
+				transition: background-color 0.2s;
+			}
+			
+			.input-file input[type=file] {
+				position: absolute;
+				z-index: -1;
+				opacity: 0;
+				display: block;
+				width: 0;
+				height: 0;
+			}
+			
+			.input-file input[type=file]:focus + span {
+				box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+			}
+			
+			.input-file:hover span {
+				background-color: #59be6e;
+			}
+			
+			.input-file:active span {
+				background-color: #2E703A;
+			}
+			
+			.input-file input[type=file]:disabled + span {
+				background-color: #eee;
+			}
+			
 		</style>
 		<script>
 			function bar_update() {
@@ -581,9 +633,8 @@
 										<span>
 											При первой загрузке результатов голосования может быть задержка в отображении данных.<br> 
 											В случае долгого их отсутствия, попробуйте перезагрузить страницу или переключиться на запасной прокси.
-										<span>
+										</span>
 									</div>
-									
 								</div>
 								<ul class="features">
 									<table class="table_data table_striped_main"></table>
@@ -606,7 +657,7 @@
 											Для включения запасного прокси необходимо перейти по ссылке справа
 											и нажать на кнопку:<br>"Request temporary access to the demo server". 
 											После чего перезагрузить страницу и снова переключиться на запасной прокси
-										<span>
+										</span>
 									</div>
 									<div class="price">
 										<a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">Ссылка для включения</a>
@@ -623,46 +674,156 @@
 		</div>
 		
 		<div class="container">
-			<div class="item-inner container-item">
-				
-				<h2 style="text-align: center;">
-					<span style="font-size: x-large;">
-						<span style="color: rgb(153, 51, 0);">Обработка результатов голосования</span>
-					</span>
-					<span style="color: rgb(153, 51, 0);">
-						<span style="font-size: xx-large;"><br/></span>
-					</span>
-				</h2>
-				
-				<p style="text-align: center;">Чтобы проголосовать, нужно отправить <b>SMS</b> с 
-					<span style="font-size: large;">
-						<span style="font-size: small;"><span style="color: rgb(153, 51, 0);"><b>кодом</b></span></span>
-					</span> 
-					кандидата на номер <span style="font-size: large;"><span style="font-size: small;"><span style="color: rgb(153, 51, 0);"><b>5533</b></span></span></span>
-				</p>
-				
-				<p style="text-align: center;">
-					<span style="color: rgb(255, 0, 0);"><span style="font-size: smaller;">Только для Операторов России:</span></span>
-					<span style="font-size: smaller;"> Билайн, МТС, МегаФон, Tele2, Тинькофф, Мотив.<br /></span>
-				</p>
-				
-				<p style="text-align: center;">
-					<i>Например, для голосования за кандидата <b>&laquo;имя кандидата&raquo;</b>, отправьте SMS на номер 
-					<b>5533 </b>с кодом:&nbsp; </i><b>ГОЛОС 1</b><i><br />
-					(пробел обязателен, регистр букв значения не имеет)</i>
-				</p>
-				
-				<p style="text-align: center;">
-					<i> </i><span style="font-size: smaller;">Стоимость отправки SMS: </span><b><span style="font-size: smaller;">11 рублей</span>
-					</b><span style="font-size: smaller;">. (<span style="font-size: smaller;">SMS для подтверждения Оператору -&nbsp; бесплатно).</span>
-					</span><b><span style="font-size: smaller;"> </span></b>
-				</p>
-				
-				<h2 style="text-align: center;">
-					Отправьте на номер <span style="color: rgb(153, 51, 0);">5533</span> SMS с <font color="#&quot;+color+&quot;"> кодом</font> конкурсанта
-				</h2>
-					
+			<div class="pricing-wrapper">
+				<div class="pricing-tables">
+					<div class="pricing-item">
+						<div class="item-inner">
+							<div class="item-header">
+								<div class="title">
+									<b>Обработка результатов голосования</b>
+									<span>
+										Загрузите итоги голосования и списки голосующих с помощью кнопок ниже. Данные должны быть в формате CSV.
+									</span>
+								</div>
+							</div>
+							<label class="input-file" style="margin-left: 35vh;">
+									<input id="input_itogi" type="file" name="file">		
+									<span>Загрузить итоги голосования</span>
+								</label>
+								
+								<label class="input-file">
+									<input id="input_spiski" type="file" name="file">		
+									<span>Загрузить списки голосующих</span>
+								</label>
+							<ul class="features">
+								<table class="table_data table_results"></table>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div><br/>
+		</div>
+		<br/>
+		
+		<script>
+			$('#input_itogi').on('change', function(){
+				console.log("Итоги голосования загружены");
+				
+				let file = this.files[0];
+				$(this).next().html(file.name);
+				
+				let reader = new FileReader();
+				reader.readAsText(file);
+				
+				reader.onload = function() {
+					//console.log(reader.result);
+					eel.loadItogi(reader.result);
+				};
+				
+				reader.onerror = function() {
+					console.log(reader.error);
+				};
+				
+			});
+			
+			$('#input_spiski').on('change', function(){
+				console.log("Списки голосующих загружены");
+				
+				let file = this.files[0];
+				$(this).next().html(file.name);
+				
+				let reader = new FileReader();
+				reader.readAsText(file);
+				
+				reader.onload = function() {
+					//console.log(reader.result);
+					eel.loadSpiski(reader.result);
+				};
+				
+				reader.onerror = function() {
+					console.log(reader.error);
+				};
+			});
+			
+			eel.expose(printResult);
+			function printResult(results) {
+				console.log("Обработанные данные");
+				
+				//results = JSON.parse(results);
+				console.log(results);
+				var total_v = 0;
+				
+				var name = [
+					'Школа "Лидер"',
+					'Общественное движение "Волонтеры культуры г. Шахты"',
+					'Шахтинская городская организация профсоюза работников народного образования и науки',
+					'Институт сферы обслуживания и предпринимательства (филиал) ДГТУ в г. Шахты',
+					'Студенческий совет Шахтинского техникума дизайна и сервиса "Дон-Текс"',
+					'Шахтинский автодорожный институт (филиал) ЮРГПУ (НПИ) им. М.И. Платова'
+				];
+				
+				$.each(results, function(key, count) {
+					total_v+=count;
+				});
+				
+				$( ".table_results" ).html('');
+						
+				function add(txt){
+					$('.table_results').html($('.table_results').html() + txt);
+				}
+				
+				add("<tr>" +
+						"<th>Код кандидата</th>" +
+						"<th>Название организации кандидата</th>" +
+						"<th>Процент и количество проголосовавших</th>" + 
+					"</tr>"
+				);
+				
+				for(var i in results) {
+					var x;
+					var percent;
+					
+					x = results[i]/(total_v/100.0); 
+					percent = Math.round(x*100)/100;
+		
+					add("<tr>"+
+							"<td class='pref' width='200'>" + 
+								"<font class='circle kod-kandidata'>ГОЛОС "+ i +"</font>" + 
+							"</td>"+
+							
+							"<td class='name' width='400'>" + 
+								"<font class='organizaciy'>"+ name[i-1] + "</font>" + 
+							"</td>"+
+							
+							"<td class='proc' width='400'>" +
+								"<span class='proc'>"+
+									"<div style='border-radius: 10px; height:100%; float:left; background: #3772ff; width:" +100*results[i]/total_v+"%'>&nbsp;</div>"+
+									"<div style='height:100%; width:100%;'>" + 
+										"<font class='itogi'>&nbsp;" + percent + " % (" + results[i] +")</font>" + 
+									"</div>" +
+								"</span>" + 
+							"</td>"+
+						"</tr>"
+					);
+				}
+				
+				add("<tr><td><br></td></tr>");
+				add("<tr>" +
+							"<td></td>" +
+							"<td class='name' width='400'>" + 
+								"<font class='organizaciy'>Всего проголосовавших</font>" + 
+							"</td>"+
+							"<td class='proc' width='400'>" +
+								"<span class='proc'>"+
+									"<div style='height:100%; width:100%;'>" + 
+										"<font class='itogi'>" + total_v +"</font>" + 
+									"</div>" +
+								"</span>" + 
+							"</td>"+
+						"</tr>"
+				);
+			};
+			
+		</script>
 	</body>
 </html>
