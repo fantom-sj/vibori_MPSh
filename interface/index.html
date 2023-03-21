@@ -423,8 +423,9 @@
 			function bar_update() {
 				var proxy_main = 'https://api.allorigins.win/get?url=';
 				var proxy_dop  = 'https://cors-anywhere.herokuapp.com/';
+				var URLData    = 'URL not available';
 				
-				$.getJSON(proxy_main + encodeURIComponent('http://clients.e-vostok.ru/mvote/json.php?service=26629'), 
+				$.getJSON(proxy_main + encodeURIComponent(URLData), 
 					function (data) {
 						//console.log(data.contents);
 						data = JSON.parse(data.contents)
@@ -514,7 +515,7 @@
 					
 				$.ajax({ 
 					type: 'POST', 
-					url: proxy_dop + 'http://clients.e-vostok.ru/mvote/json.php?service=26629',
+					url: proxy_dop + URLData,
 					headers: {  'Access-Control-Allow-Origin': '*' },
 					dataType: 'json',
 					success: function (data) {
